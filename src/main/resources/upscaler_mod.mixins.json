@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "net.jimtendo.upscaler_mod.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"ExampleMixin",
+		"GameRendererMixin",
+		"VideoSettingsScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

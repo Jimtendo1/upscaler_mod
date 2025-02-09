@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "upscaler_mod",
+	"version": "${version}",
+	"name": "Upscaler Mod",
+	"description": "This mod will add various upscaling techniques in hopes of improving fps (will probably work better with shaders once shader support is implemented)",
+	"authors": [
+		"Jimtendo"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/upscaler_mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.jimtendo.upscaler_mod.UpscalerMod"
+		],
+		"client": [
+			"net.jimtendo.upscaler_mod.UpscalerModClient"
+		],
+		"fabric-datagen": [
+			"net.jimtendo.upscaler_mod.UpscalerModDataGenerator"
+		]
+	},
+	"mixins": [
+		"upscaler_mod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
