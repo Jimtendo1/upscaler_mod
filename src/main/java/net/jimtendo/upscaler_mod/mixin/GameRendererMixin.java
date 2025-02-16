@@ -49,15 +49,6 @@ public class GameRendererMixin {
                     GL30C.GL_NEAREST
             );
 
-            if (fbHelper.customFbo != null) {
-                // Debug: Draw the custom FBO's texture directly to the screen
-                fbHelper.customFbo.draw(
-                        fbHelper.customFbo.textureWidth,
-                        fbHelper.customFbo.textureHeight,
-                        false
-                );
-            }
-
             // Restore the original framebuffer bindings
             GlStateManager._glBindFramebuffer(GL30C.GL_FRAMEBUFFER, originalFbo);
 
