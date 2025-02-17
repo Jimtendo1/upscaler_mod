@@ -2,6 +2,7 @@ package net.jimtendo.upscaler_mod.mixin;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.jimtendo.upscaler_mod.FramebufferHelper;
+import net.jimtendo.upscaler_mod.UpscaleConfig;
 import net.jimtendo.upscaler_mod.UpscalerModClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Framebuffer;
@@ -21,7 +22,8 @@ public class GameRendererMixin {
 
     @Inject(method = "renderWorld", at = @At("HEAD"))
     private void redirectFramebuffer(CallbackInfo ci) {
-        if (UpscalerModClient.framebufferHelper.customFbo != null) {
+        if (UpscalerModClient.CONFIG.algorithm != UpscaleConfig.ScalingAlgorithm.NONE &&
+                UpscalerModClient.framebufferHelper.customFbo != null) {
             UpscalerModClient.framebufferHelper.customFbo.beginWrite(true);
         }
     }

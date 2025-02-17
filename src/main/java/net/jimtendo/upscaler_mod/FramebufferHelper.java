@@ -10,16 +10,29 @@ public class FramebufferHelper {
 
     public void updateFramebufferSize(boolean force) {
         MinecraftClient client = MinecraftClient.getInstance();
-        float factor = UpscalerModClient.CONFIG.scalingFactor.factor;
 
+        // Early exit if upscaling is disabled
+        if (UpscalerModClient.CONFIG.algorithm == UpscaleConfig.ScalingAlgorithm.NONE) {
+            if (customFbo != null) {
+                customFbo.delete();
+                customFbo = null;
+            }
+            return;
+        }
+
+        // Only calculate scaling if algorithm is active
+        float factor = UpscalerModClient.CONFIG.scalingFactor.factor;
         int newWidth = Math.max((int)(client.getWindow().getFramebufferWidth() * factor), 1);
         int newHeight = Math.max((int)(client.getWindow().getFramebufferHeight() * factor), 1);
 
+        // Create new FBO if none exists
         if (customFbo == null) {
             customFbo = new SimpleFramebuffer(newWidth, newHeight, true, false);
             customFbo.setTexFilter(GlConst.GL_LINEAR);
             needsResize = false;
-        } else if (needsResize || force ||
+        }
+        // Resize existing FBO if needed
+        else if (needsResize || force ||
                 customFbo.textureWidth != newWidth ||
                 customFbo.textureHeight != newHeight) {
             customFbo.resize(newWidth, newHeight, false);
@@ -29,5 +42,13 @@ public class FramebufferHelper {
 
     public void markForResize() {
         needsResize = true;
+    }
+
+    // Cleanup when the mod is unloaded
+    public void cleanup() {
+        if (customFbo != null) {
+            customFbo.delete();
+            customFbo = null;
+        }
     }
 }
